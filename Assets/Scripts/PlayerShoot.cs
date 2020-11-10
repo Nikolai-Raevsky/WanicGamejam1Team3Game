@@ -24,24 +24,26 @@ public class PlayerShoot : MonoBehaviour
     void Start()
     {
         myRb = GetComponent<Rigidbody2D>();
-        
     }
 
     // Update is called once per frame
     void Update()
     {
-        Timer += Time.deltaTime;
-        //spacebar fires
-        if(Input.GetAxisRaw("Jump") > 0)
+        if (!PauseMenu.isPaused && !SearchObject.IsSearching && !ChestOpen.Open)
         {
-            //check if player even has a weapon
-            if (currentWeapon != 0)
+            Timer += Time.deltaTime;
+            //spacebar fires
+            if (Input.GetAxisRaw("Jump") > 0)
             {
-                if (Timer >= Cooldown)
+                //check if player even has a weapon
+                if (currentWeapon != 0)
                 {
-                    Timer = 0;
-                    CameraShake.TriggerShake(0.2f, 0.02f);
-                    Fire(transform.position, transform.up);
+                    if (Timer >= Cooldown)
+                    {
+                        Timer = 0;
+                        CameraShake.TriggerShake(0.2f, 0.02f);
+                        Fire(transform.position, transform.up);
+                    }
                 }
             }
         }
@@ -58,26 +60,25 @@ public class PlayerShoot : MonoBehaviour
                 //set bullet velocity
                 projFlareGun.GetComponent<Rigidbody2D>().velocity = (direction * ProjectileSpeed) + (Vector3)myRb.velocity;
                 //move bullet
-                projFlareGun.transform.Translate(Vector3.up * 0.90f, Space.Self);
-                projFlareGun.transform.Translate(Vector3.right * 0.235f, Space.Self);
-                
+                projFlareGun.transform.Translate(Vector3.up * 0.80f, Space.Self);
+                projFlareGun.transform.Translate(Vector3.right * 0.475f, Space.Self);
+                AudioManage.PlaySound("flareShot");
+
                 break;
             case 2:
                 GameObject projHarpoonGun = Instantiate<GameObject>(ProjectileHarpoonGun, position, transform.rotation);
                 //set bullet velocity
                 projHarpoonGun.GetComponent<Rigidbody2D>().velocity = (direction * ProjectileSpeed) + (Vector3)myRb.velocity;
                 //move bullet
-                projHarpoonGun.transform.Translate(Vector3.up * 0.90f, Space.Self);
-                projHarpoonGun.transform.Translate(Vector3.right * 0.235f, Space.Self);
+                projHarpoonGun.transform.Translate(Vector3.up * 0.80f, Space.Self);
+                projHarpoonGun.transform.Translate(Vector3.right * 0.475f, Space.Self);
                 break;
         }
         
         GameObject newMuzzleFlash = Instantiate<GameObject>(MuzzleFlashEffect, position, transform.rotation);
         //move flash
-        newMuzzleFlash.transform.Translate(Vector3.up * 0.69f, Space.Self);
-        newMuzzleFlash.transform.Translate(Vector3.right * 0.235f, Space.Self);
-        
-        
+        newMuzzleFlash.transform.Translate(Vector3.up * 0.80f, Space.Self);
+        newMuzzleFlash.transform.Translate(Vector3.right * 0.475f, Space.Self);
         
     }
 }
