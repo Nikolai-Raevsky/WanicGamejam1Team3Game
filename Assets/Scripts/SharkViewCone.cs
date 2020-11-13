@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿//Cooper Spring, 11/10/2020, code that checks if the player is in the shark's view cone and changes public static bool
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,7 +11,6 @@ public class SharkViewCone : MonoBehaviour
         if (collision.gameObject.name == "Player")
         {
             playerInViewCone = true;
-            Debug.Log("Player Entered View Cone");
         }
     }
 
@@ -19,7 +19,6 @@ public class SharkViewCone : MonoBehaviour
         if (collision.gameObject.name == "Player")
         {
             playerInViewCone = false;
-            Debug.Log("Player Exited View Cone");
         }
     }
     public void OnTriggerStay2D(Collider2D collision)
